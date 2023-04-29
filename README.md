@@ -28,13 +28,19 @@ lsblk
 Run the following command, you can change vim to your tty text editor of choice:
 
 ```bash
-pacstrap /mnt pacman vim bash git
+pacstrap /mnt pacman vim bash git tar gzip
 ```
 
-Change to the mnt directory and use git to acquire the scripts to install LFS4All:
+Change root to the /mnt with this command:
 
 ```bash
-cd /mnt
+arch-chroot /mnt
+```
+
+Change to the root directory and use git to acquire the scripts to install LFS4All:
+
+```bash
+cd /
 git clone https://github.com/curtdouglas1981/LFS4All.git
 ```
 
@@ -44,20 +50,13 @@ Move the scripts tarball to the parent directory and the delete the git reposito
 cd LFS4All
 cp scripts.tar.gz ../
 cd ../
-rm LFS4All
+rm -r LFS4All
 ```
 
 Extract the tarball.
 
 ```bash
 tar -xvf scripts.tar.gz
-```
-
-Change root to the /mnt with this command:
-
-```bash
-arch-chroot /mnt
-```
 
 to speed up the downloads you can uncomment this line in the /etc/pacman.conf file
 #ParallelDownloads = 5
@@ -126,7 +125,7 @@ now setup the grub bootloader or any other of your choice
 
 ```bash
 mkdir /boot/EFI
-mount /dev/sda1 /boot/EFI
+mount /dev/<xxx> /boot/EFI
 grub-install --target=x86_64-efi --bootloader-id=grub_uefi --recheck
 grub-mkconfig -o /boot/grub/grub.cfg
 ```
@@ -149,8 +148,13 @@ now run the command
 genfstab -U /mnt >> /mnt/etc/fstab
 ```
 
-DONE
-remove the live entvironment media and reboot the system
+Unmount the target system and reboot with the following command.
+Be sure to remove the live media.
+
+```bash
+umount -l /mnt
+reboot
+```
 
 The login will be:
 username: root
