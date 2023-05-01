@@ -19,7 +19,7 @@ e2fsprogs
 elfutils
 eudev
 expat
-expec
+expect
 file
 findutils
 flex
@@ -97,4 +97,4 @@ efibootmgr
 dosfstools
 os-prober
 mtools
-lbs-releawse
+lbs-release
